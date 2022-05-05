@@ -91,7 +91,7 @@ def main(argv):
           ff.write(line + "\n")
         count += 1
         
-    scorer = rouge_scorer.RougeScorer(FLAGS.rouge_types, FLAGS.use_stemmer, lang=FLAGS.lang)
+    scorer = rouge_scorer.RougeScorer(FLAGS.rouge_types, use_stemmer=FLAGS.use_stemmer, lang=FLAGS.lang)
     aggregator = scoring.BootstrapAggregator() if FLAGS.aggregate else None
     io.compute_scores_and_write_to_csv(
         directory+'/'+FLAGS.target_filepattern,
