@@ -1,20 +1,32 @@
 import argparse
 from rouge_score import rouge_scorer
+import tempfile
 
 def calc_rouge(prediction_file, reference_file):
     print('calculating ROUGE')
     print('prediction file', prediction_file)
-    print('reference file', reference_file)
-    with open(prediction_file, encoding='utf-8') as pred_f,\
-        open(reference_file, encoding='utf-8') as ref_f:
-        predictions = pred_f.readlines()
-        references = ref_f.readlines()
-        
+    print('reference file', reference_file)       
 
-        scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True, lang="bengali")
-        scores = scorer.score('তোমার সাথে দেখা হয়ে ভালো লাগলো।',
-                            'আপনার সাথে দেখা হয়ে ভালো লাগলো।')
-        print(scores)
+    with tempfile.TemporaryDirectory() as directory:
+        # print('The created temporary directory is %s' % directory)
+        with open(prediction_file, encoding='utf-8') as pred_f:
+            predictions = pred_f.readlines()
+            count = 1
+            for line in predictions:
+                with open(directory + '/'+str(count)+'.decodes', 'w', encoding='utf-8') as ff:
+                    ff.write(line + "\n")
+                count += 1
+
+        with open(reference_file, encoding='utf-8') as ref_f:
+            references = ref_f.readlines()
+            count = 1
+            for line in references:
+                with open(directory + '/'+str(count)+'.targets', 'w', encoding='utf-8') as ff:
+                    ff.write(line + "\n")
+                count += 1
+
+            
+
         
 
 if __name__ == '__main__':

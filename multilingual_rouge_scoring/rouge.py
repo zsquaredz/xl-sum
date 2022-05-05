@@ -44,11 +44,16 @@ from absl import flags
 from rouge_score import io
 from rouge_score import rouge_scorer
 from rouge_score import scoring
+import tempfile
 
 flags.DEFINE_string("target_filepattern", None,
                     "Files containing target text.")
+flags.DEFINE_string("target_file", None,
+                    "File containing target texts.")
 flags.DEFINE_string("prediction_filepattern", None,
                     "Files containing prediction text.")
+flags.DEFINE_string("prediction_file", None,
+                    "Files containing prediction texts.")
 flags.DEFINE_string("output_filename", None,
                     "File in which to write calculated ROUGE scores as a CSV.")
 flags.DEFINE_string("delimiter", "\n",
@@ -68,15 +73,33 @@ FLAGS = flags.FLAGS
 def main(argv):
   if len(argv) > 1:
     raise app.UsageError("Too many command-line arguments.")
-  scorer = rouge_scorer.RougeScorer(FLAGS.rouge_types, FLAGS.use_stemmer, lang=FLAGS.lang)
-  aggregator = scoring.BootstrapAggregator() if FLAGS.aggregate else None
-  io.compute_scores_and_write_to_csv(
-      FLAGS.target_filepattern,
-      FLAGS.prediction_filepattern,
-      FLAGS.output_filename,
-      scorer,
-      aggregator,
-      delimiter=FLAGS.delimiter)
+  with tempfile.TemporaryDirectory() as directory:
+    # print('The created temporary directory is %s' % directory)
+    with open(FLAGS.prediction_file, encoding='utf-8') as pred_f:
+      predictions = pred_f.readlines()
+      count = 1
+      for line in predictions:
+        with open(directory + '/'+str(count)+'.decodes', 'w', encoding='utf-8') as ff:
+          ff.write(line + "\n")
+        count += 1
+
+    with open(FLAGS.target_file, encoding='utf-8') as ref_f:
+      references = ref_f.readlines()
+      count = 1
+      for line in references:
+        with open(directory + '/'+str(count)+'.targets', 'w', encoding='utf-8') as ff:
+          ff.write(line + "\n")
+        count += 1
+        
+    scorer = rouge_scorer.RougeScorer(FLAGS.rouge_types, FLAGS.use_stemmer, lang=FLAGS.lang)
+    aggregator = scoring.BootstrapAggregator() if FLAGS.aggregate else None
+    io.compute_scores_and_write_to_csv(
+        directory+'/'+FLAGS.target_filepattern,
+        directory+'/'+FLAGS.prediction_filepattern,
+        FLAGS.output_filename,
+        scorer,
+        aggregator,
+        delimiter=FLAGS.delimiter)
 
 
 if __name__ == "__main__":
