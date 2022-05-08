@@ -6,7 +6,7 @@ def calc_rouge(prediction_file, reference_file):
     print('calculating ROUGE')
     print('prediction file', prediction_file)
     print('reference file', reference_file)       
-    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True, lang="bengali")
+    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True, lang="arabic")
     scores = {'rouge1':[],'rouge2':[],'rougeL':[]}
     with open(prediction_file, encoding='utf-8') as pred_f,\
         open(reference_file, encoding='utf-8') as ref_f:
