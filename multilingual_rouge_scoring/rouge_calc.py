@@ -18,8 +18,11 @@ def calc_rouge(prediction_file, reference_file):
             reference = references[i].strip()
             score = scorer.score(target=reference, prediction=prediction)
             print(score['rouge1'])
-            print(score['rouge1'][1])
-            exit()
+            print(score['rouge1'][2])
+            scores['rouge1'].append(score['rouge1'][2])
+            scores['rouge2'].append(score['rouge2'][2])
+            scores['rougeL'].append(score['rougeL'][2])
+    return sum(scores['rouge1']) / float(len(scores['rouge1'])), sum(scores['rouge2']) / float(len(scores['rouge2'])), sum(scores['rougeL']) / float(len(scores['rougeL']))
             
           
 
