@@ -7,7 +7,7 @@ def calc_rouge(prediction_file, reference_file):
     print('prediction file', prediction_file)
     print('reference file', reference_file)       
 
-    scorer = rouge_scorer.RougeScorer(['rouge1', 'rougeL'], use_stemmer=True, lang="bengali")
+    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True, lang="bengali")
     scores = scorer.score('তোমার সাথে দেখা হয়ে ভালো লাগলো।',
                       'আপনার সাথে দেখা হয়ে ভালো লাগলো।')
     print(scores)
