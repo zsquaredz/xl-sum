@@ -13,7 +13,7 @@ def calc_rouge(prediction_file, reference_file):
         predictions = pred_f.readlines()
         references = ref_f.readlines()
         assert len(predictions) == len(references)
-        for i in len(predictions):
+        for i in range(len(predictions)):
             prediction = predictions[i].strip()
             reference = references[i].strip()
             score = scorer.score(target=reference, prediction=prediction)
