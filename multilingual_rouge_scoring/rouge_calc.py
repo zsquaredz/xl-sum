@@ -10,6 +10,7 @@ def calc_rouge(prediction_file, reference_file):
     scorer = rouge_scorer.RougeScorer(['rouge1', 'rougeL'], use_stemmer=True, lang="bengali")
     scores = scorer.score('তোমার সাথে দেখা হয়ে ভালো লাগলো।',
                       'আপনার সাথে দেখা হয়ে ভালো লাগলো।')
+    print(scores)
     # with tempfile.TemporaryDirectory() as directory:
     #     # print('The created temporary directory is %s' % directory)
     #     with open(prediction_file, encoding='utf-8') as pred_f:
