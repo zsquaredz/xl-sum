@@ -29,8 +29,8 @@ def calc_rouge(prediction_file, reference_file):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="summarization")
-    parser.add_argument("--prediction_file", type=str, default='./data/test.target', help="Location of prediction file")
-    parser.add_argument("--reference_file", type=str, default='./data/test.target', help="Location of reference file")
+    parser.add_argument("--prediction_file", '-p', type=str, default='./data/test.target', help="Location of prediction file")
+    parser.add_argument("--reference_file", '-r', type=str, default='./data/test.target', help="Location of reference file")
     args = parser.parse_args()
     calc_rouge(args.prediction_file, args.reference_file)
     # print(f'\t R-1: {r1} | R-2: {r2} | R-L: {rl} | R-Lsum: {rlsum}')
