@@ -6,7 +6,7 @@ def calc_rouge(prediction_file, reference_file):
     print('calculating ROUGE')
     print('prediction file', prediction_file)
     print('reference file', reference_file)       
-    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True, lang="arabic")
+    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=False, lang="arabic")
     scores = {'rouge1':[],'rouge2':[],'rougeL':[]}
     with open(prediction_file, encoding='utf-8') as pred_f,\
         open(reference_file, encoding='utf-8') as ref_f:
@@ -17,18 +17,10 @@ def calc_rouge(prediction_file, reference_file):
             prediction = predictions[i].strip()
             reference = references[i].strip()
             score = scorer.score(target=reference, prediction=prediction)
-            print(score['rouge1'])
-            print(score['rouge1'][2])
             scores['rouge1'].append(score['rouge1'][2])
             scores['rouge2'].append(score['rouge2'][2])
             scores['rougeL'].append(score['rougeL'][2])
     return sum(scores['rouge1']) / float(len(scores['rouge1'])), sum(scores['rouge2']) / float(len(scores['rouge2'])), sum(scores['rougeL']) / float(len(scores['rougeL']))
-            
-          
-
-            
-
-        
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="summarization")
