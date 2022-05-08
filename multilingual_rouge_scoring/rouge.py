@@ -107,3 +107,12 @@ if __name__ == "__main__":
   flags.mark_flag_as_required("prediction_filepattern")
   flags.mark_flag_as_required("output_filename")
   app.run(main)
+
+  # python -m rouge \
+  # --target_filepattern=*.targets \
+  # --prediction_filepattern=*decodes \
+  # --output_filename=zz.csv \
+  # --use_stemmer=true \
+  # --lang='english' \
+  # --target_file=/home/hpczhao1/rds/hpc-work/multilingual_adapters/predictions/mBART/wikilingual/mbart_large_cc25_bz4_lr1e-5_ja-en.gold.txt.val \
+  # --prediction_file=/home/hpczhao1/rds/hpc-work/multilingual_adapters/predictions/mBART/wikilingual/mbart_large_cc25_bz4_lr1e-5_ja-en.txt.val
