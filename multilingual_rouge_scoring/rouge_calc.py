@@ -1,6 +1,5 @@
 import argparse
 from rouge_score import rouge_scorer
-import tempfile
 
 def calc_rouge(prediction_file, reference_file, stem, lang):
     print('calculating ROUGE')
@@ -20,7 +19,7 @@ def calc_rouge(prediction_file, reference_file, stem, lang):
             scores['rouge1'].append(score['rouge1'][2])
             scores['rouge2'].append(score['rouge2'][2])
             scores['rougeL'].append(score['rougeL'][2])
-    return sum(scores['rouge1']) / float(len(scores['rouge1'])), sum(scores['rouge2']) / float(len(scores['rouge2'])), sum(scores['rougeL']) / float(len(scores['rougeL']))
+    return sum(scores['rouge1']) / 100*float(len(scores['rouge1'])), sum(scores['rouge2']) / 100*float(len(scores['rouge2'])), sum(scores['rougeL']) / 100*float(len(scores['rougeL']))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="summarization")
