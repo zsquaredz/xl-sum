@@ -29,7 +29,7 @@ if __name__ == '__main__':
     parser.add_argument("--lang", '-l', type=str, default='english', help="Language")
     args = parser.parse_args()
     r1, r2, rl = calc_rouge(args.prediction_file, args.reference_file, args.stem, args.lang)
-    print(f'\t R-1: {r1} | R-2: {r2} | R-L: {rl}')
+    print(f'\t R-1: {r1:.3f} | R-2: {r2:.3f} | R-L: {rl:.3f}')
     # r1, r2, rl, rlsum = calc_rouge_hack_for_ja(args.prediction_file, args.reference_file)
     # print(f'\t R-1: {r1} | R-2: {r2} | R-L: {rl} | R-Lsum: {rlsum}')
     # calc_rouge_1(args.prediction_file, args.reference_file)
